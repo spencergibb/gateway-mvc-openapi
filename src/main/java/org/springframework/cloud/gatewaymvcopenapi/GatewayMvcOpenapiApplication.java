@@ -24,6 +24,8 @@ import static org.springframework.web.servlet.function.RequestPredicates.version
 @SpringBootApplication
 public class GatewayMvcOpenapiApplication {
 
+	// http :8080/v3/api-docs
+
 	// http :8080/anything/versioned X-API-Version:2.0.1
 	// http :8080/anything/versioned X-API-Version:1.0.0
 	// http :8080/anything/versioned X-API-Version:0.9.0
@@ -32,9 +34,9 @@ public class GatewayMvcOpenapiApplication {
 		// @formatter:off
 		return route()
 				.GET(path("/anything/versioned").and(version("2.0+")), http(),
-						ops -> ops.operationId("versioned20")
-							.parameter(parameterBuilder().in(ParameterIn.HEADER).name("X-Version")
-								.schema(schemaBuilder().type("string").defaultValue("1.0").allowableValues(new String[]{"1.0", "2.0"}))))
+						ops -> ops.operationId("versioned20"))
+							// .parameter(parameterBuilder().in(ParameterIn.HEADER).name("X-Version")
+							// 	.schema(schemaBuilder().type("string").defaultValue("1.0").allowableValues(new String[]{"1.0", "2.0"}))))
 				.before(unary(routeId("versionroute20")))
 				.before(unary(new HttpbinUriResolver()))
 				.after(addResponseHeader("X-Version", "2.0+"))
