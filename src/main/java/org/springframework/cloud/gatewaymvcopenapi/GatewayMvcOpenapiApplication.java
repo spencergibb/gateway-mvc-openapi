@@ -39,7 +39,7 @@ public class GatewayMvcOpenapiApplication {
 	public RouterFunction<ServerResponse> gatewayRouterFunction() {
 		// @formatter:off
 		return route()
-			.GET("/userdocs", http(), ops -> ops.operationId("getUserDocs"))
+			.GET("/users/docs", http(), ops -> ops.operationId("getUserDocs"))
 				.before(unary(routeId("userapidocs")))
 				.before(unary(setPath("/v3/api-docs")))
 				.filter(lb("users"))
