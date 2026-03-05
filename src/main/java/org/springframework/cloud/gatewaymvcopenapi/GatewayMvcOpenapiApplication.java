@@ -39,16 +39,8 @@ public class GatewayMvcOpenapiApplication {
 				.before(unary(new HttpbinUriResolver()))
 				// .filter(lb("httpbin"))
 				.after(addResponseHeader("X-Version", "2.0+"))
-				.build();
-		// @formatter:on
-	}
-
-	@Bean
-	public RouterFunction<ServerResponse> version10(LoadBalancerClient lbClient) {
-		// @formatter:off
-		return route()
-				.GET("/anything/versioned", version("1.0+"), http(),
-						ops -> ops.operationId("versioned").response(responseBuilder().ref(getRef(lbClient))))
+			.GET("/anything/versioned", version("1.0+"), http(),
+					ops -> ops.operationId("versioned").response(responseBuilder().ref(getRef(lbClient))))
 				.before(unary(routeId("versionroute10")))
 				.before(unary(new HttpbinUriResolver()))
 				.after(addResponseHeader("X-Version", "1.0+"))
